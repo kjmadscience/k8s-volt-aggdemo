@@ -5,7 +5,7 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 ### Components
 
-- Google Kubernetes Engine GKE [k8s version: v1.22.17-gke.4300](https://cloud.google.com/kubernetes-engine)
+- Google Kubernetes Engine [GKE](https://cloud.google.com/kubernetes-engine)
 - Helm [v3](https://helm.sh/docs/intro/install/), Kubectl [v1.19 or later](https://kubernetes.io/docs/reference/kubectl/), Gcloud CLI [gcloud docs](https://cloud.google.com/sdk/docs/install)
 - Volt Active Data [v11.4](https://docs.voltactivedata.com/v11docs/)
 - Redpanda [v22.3.5](https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment/)
@@ -22,4 +22,10 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 ### Setup Environment
 
-1. Change variables in **setup.sh** to desired values for your setup. 
+1. Change variables in **setup.sh** at the top of the file to desired values for your setup. 
+Details about the variables are below,
+
+| Variable | Description |
+| ----------- | ----------- |
+| CLUSTER_NAME | Name of kubernetes cluster that will be created in GKE |
+| MACHINE_TYPE | Type of machine from GCP machine family for nodes of the kubernetes cluster |
