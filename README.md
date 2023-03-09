@@ -5,10 +5,10 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 ### Components
 
-- Google Kubernetes Engine GKE [k8s version: v1.22.17-gke.4300] (https://cloud.google.com/kubernetes-engine)
-- Helm [v3](https://helm.sh/docs/intro/install/), Kubectl [v1.19 or later] (https://kubernetes.io/docs/reference/kubectl/), Gcloud CLI [gcloud docs] (https://cloud.google.com/sdk/docs/install)
-- Volt Active Data [v11.4] (https://docs.voltactivedata.com/v11docs/)
-- Redpanda [v22.3.5] (https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment/)
+- Google Kubernetes Engine GKE [k8s version: v1.22.17-gke.4300](https://cloud.google.com/kubernetes-engine)
+- Helm [v3](https://helm.sh/docs/intro/install/), Kubectl [v1.19 or later](https://kubernetes.io/docs/reference/kubectl/), Gcloud CLI [gcloud docs](https://cloud.google.com/sdk/docs/install)
+- Volt Active Data [v11.4](https://docs.voltactivedata.com/v11docs/)
+- Redpanda [v22.3.5](https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment/)
 - Mediation Data generator
 - Prometheus
 - Grafana
