@@ -45,7 +45,34 @@ Details about the variables are below,
 | LICENSE_FILE | File path with name for Volt Enterprise license |
 | RP_PROPERTY | Property file for redpanda | "red.yaml" |
 
+2. Change Volt properties in **myproperties.yaml**
+- resources
+- deployment properties
+- import, export broker details, change namespace according to your env.
+3. Change Redpanda properties
+- resources
 
+
+4. Run **setup.sh**
+The script will create GKE cluster, create namespaces, and deploy applications with 
+3. Verify installations
+
+5. Setup grafana
+
+	1. RP datasource
+	2. Treemap plugin
+	3. Import dashboards 
+
+4. Configure Client Parameters
+5. Create Client Pod
+
+-----------------------------
+
+Changing client properties (Producer)
+Changing import properties
+
+
+architecture image
 
 
 
