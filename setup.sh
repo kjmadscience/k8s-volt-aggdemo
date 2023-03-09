@@ -4,6 +4,8 @@ CLUSTER_NAME="volt-lab"
 MACHINE_TYPE="c2-standard-8"
 NUM_NODES="16"
 DISK_SIZE="150"
+ZONE="us-central1-c"
+K8S_CLUSTER_VERSION="1.22.17-gke.4300"
 MONITORING_NS="monitoring"
 VOLT_NS="volt"
 CLIENT_NS="client"
@@ -14,8 +16,8 @@ DOCKER_EMAIL=""
 VOLT_DEPLPOYMENTNAME="mydb"
 PROPERTY_FILE="myproperties.yaml"
 LICENSE_FILE=""
-ZONE="us-central1-c"
-K8S_CLUSTER_VERSION="1.22.17-gke.4300"
+RP_PROPERTY="red.yaml"
+
 
 
 # Creating k8s cluster - GKE
@@ -51,7 +53,7 @@ helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb --wait --values $PROPERTY_FILE 
  --set-file cluster.config.licenseXMLFile=$LICENSE_FILE --set metrics.enabled=true --set metrics.delta=true --namespace  $VOLT_NS
 
 #installing Redpanda cluster
-helm install redpanda redpanda/redpanda -n $REDPANDA_NS --values red.yaml 
+helm install redpanda redpanda/redpanda -n $REDPANDA_NS --values $RP_PROPERTY
 
 #installing Redpanda Console
 helm install rp-console redpanda-console/console --values console.yaml -n $REDPANDA_NS
