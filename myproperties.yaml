@@ -1,0 +1,67 @@
+cluster:
+  clusterSpec:
+#    nodeSelector:
+#      env: volt
+    replicas: 9
+    additionalStartArgs:
+      - '--ignore=thp"'
+    image:
+      repository: "voltdb/voltdb-enterprise"
+      tag: "11.4.3"
+      pullPolicy: "Always"
+    persistentVolume:
+      size: "100Gi"
+    deletePVC: 'true'
+    resources:
+      requests:
+        memory: "8Gi"
+        cpu: "4"
+      limits:
+        memory: "16Gi"
+        cpu: "4"
+  config:
+    deployment:
+      cluster:
+        kfactor: 1
+        sitesperhost: 4
+      commandlog:
+        enabled: 'false'
+        synchronous: 'false'
+        logsize: 2048
+      snapshot:
+        enabled: 'false'
+        frequency: '2h'
+        prefix: 'SNAP'
+      import:
+        configurations:
+        - type: "kafka"
+          enabled: 'true'
+          format: "csv"
+          properties:
+            topics: "incoming_cdrs"
+            procedure: "HandleMediationCDR" 
+            brokers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
+            max.poll.records: "1000"
+            max.partition.fetch.bytes: "5000000"
+      export:
+        configurations:
+        - target: "unaggregated_cdrs"
+          type: kafka
+          enabled: 'true'
+          properties:
+            bootstrap.servers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
+            topic.key: "unaggregated_cdrs.unaggregated_cdrs"
+        - target: "bad_cdrs"
+          type: kafka
+          enabled: 'true'
+          properties:
+            bootstrap.servers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
+            topic.key: "bad_cdrs.bad_cdrs"
+        - target: "aggregated_cdrs"
+          type: kafka
+          enabled: 'true'
+          properties:
+            bootstrap.servers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
+            topic.key: "aggregated_cdrs.aggregated_cdrs"  
+  serviceSpec:
+    type: "NodePort"
