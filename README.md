@@ -132,30 +132,32 @@ prometheus-server   ClusterIP   10.36.10.184   <none>        80/TCP
 	- [ ] RP datasource :Add Redpanda prometheus as datasource using its fully qualified service name.
 
 	- [ ] Install Treemap plugin
-	- [ ] Import dashboards 
+	- [ ] Import dashboards from Dashboards folder in this repo
 
-8. Eyes to the environment
-
-
+9. Eyes to the environment
 > Below are the different observability mediums for the entire env
 
 - Volt VMC
-The type of service is configured in **myproperties.yaml**
+	- The type of service is configured in **myproperties.yaml**
 
-Access it by checking ExternalNodeIP:VoltHTTPservicePort
+	- Access VMC by checking ExternalNodeIP:VoltHTTPservicePort
 
 - Redpanda Console
-The type of service is configured in **console.yaml**
+	- The type of service is configured in **console.yaml**
 
-Access NodePort by checking ExternalNodeIP and redpanda console service NodePort Value
+	- Access Console by checking ExternalNodeIP and redpanda console service NodePort value
 
+- Grafana UI
+	- The type of service is configured in **config.yaml**
+	- Access the UI by checking ExternalNodeIP and grafana stack serviceNodePort value
 
-9. Configure Client Parameters
+10. Configure Client Parameters
 
 Full details about client configurations are [here](https://github.com/srmadscience/voltdb-aggdemo)
 
 In the kubernetes environment we will pass the parameters in **testClient.yaml** 
 In the args section of container definition, as shown below
+
 ```
 
 # hostnames, usercount, tpms, durationseconds, missing ratio,dup ratio, late ratio, dateis1970ratio, offset --> Legend for params
@@ -167,7 +169,7 @@ In the args section of container definition, as shown below
 
 ```
 
-10. Create Client Job
+11. Create Client Job
 
 To generate traffic on the system, simply create the Job using **testClient.yaml** this will create a pod that generates mediation data to the configured host, specified in args. 
 
