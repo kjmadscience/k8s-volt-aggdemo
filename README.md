@@ -21,7 +21,7 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 ### Architecture Diagram
 
-![Volt Redpanda Mediation Env Architecture Diagram](images/VoltRedPandaMediationDemo.jpeg)
+![Volt Redpanda Mediation Env Architecture Diagram](image/VoltRedPandaMediationDemo.jpeg)
 
 ### Setup Environment
 
