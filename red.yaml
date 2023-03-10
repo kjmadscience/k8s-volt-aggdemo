@@ -1,13 +1,11 @@
 resources:
   cpu:
-    cores: 6
+    cores: 12
   memory:
     container:
-      min: 16Gi
-      max: 16Gi
+      min: 32Gi
+      max: 32Gi
 storage:
   persistentVolume:
     enabled: true
     size: 100Gi
-
-      
