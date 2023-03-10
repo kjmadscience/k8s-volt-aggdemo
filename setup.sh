@@ -67,7 +67,7 @@ kubectl cp schema/voltdb-aggdemo-createDB.sql mydb-voltdb-cluster-0:/tmp/ -n $VO
 
 kubectl cp schema/procs.jar mydb-voltdb-cluster-0:/tmp/ -n $VOLT_NS
 
-kubectl exec -it mydb-voltdb-cluster-0 -n $VOLT_NS -- sqlcmd < voltdb-aggdemo-createDB.sql
+kubectl exec -it mydb-voltdb-cluster-0 -n $VOLT_NS -- sqlcmd < schema/voltdb-aggdemo-createDB.sql
     
 #create topics in redpanda
 
