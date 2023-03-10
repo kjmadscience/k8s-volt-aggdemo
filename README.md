@@ -19,6 +19,9 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 2. Access and license to Volt Active Data Helm Charts and enterprise docker images.
 
+### Architecture Diagram
+
+![Volt Redpanda Mediation Env Architecture Diagram](images/VoltRedPandaMediationDemo.jpeg)
 
 ### Setup Environment
 
@@ -54,20 +57,21 @@ Details about the variables are below,
 3. Change Redpanda properties in **red.yaml**
 	- resources (CPU, RAM)
 	- Volumes
-For Redpanda console, verify properties in **console.yaml**
+
+4. For Redpanda console, verify properties in **console.yaml**
     - Brokers FQDN service name
     - Service type
 
-4. Add helm repos (one time step)
+5. Add helm repos (one time step)
 
 Volt: `helm repo add voltdb https://voltdb-kubernetes-charts.storage.googleapis.com`
 
 Redpanda: `helm repo add redpanda https://charts.redpanda.com `
 
-5. Run **setup.sh**
+6. Run **setup.sh**
 The script will create GKE cluster, create namespaces, and deploy applications with properties defined in earlier step.
 
-6. Verify installations
+7. Verify installations
 
 - Volt
 
@@ -123,16 +127,17 @@ $ kubectl get svc -n rpmonitor
 NAME                TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)  
 prometheus-server   ClusterIP   10.36.10.184   <none>        80/TCP    
 ```
-7. Setup grafana
+8. Setup grafana
 
-	1. RP datasource
-	Add Redpanda prometheus as datasource using its fully qualified service name.
+	- [ ] RP datasource :Add Redpanda prometheus as datasource using its fully qualified service name.
 
+	- [ ] Install Treemap plugin
+	- [ ] Import dashboards 
 
-	2. Install Treemap plugin
-	3. Import dashboards 
 8. Eyes to the environment
-Below are the different observability mediums for the entire env
+
+
+> Below are the different observability mediums for the entire env
 
 - Volt VMC
 The type of service is configured in **myproperties.yaml**
@@ -141,6 +146,8 @@ Access it by checking ExternalNodeIP:VoltHTTPservicePort
 
 - Redpanda Console
 The type of service is configured in **console.yaml**
+
+Access NodePort by checking ExternalNodeIP and redpanda console service NodePort Value
 
 
 9. Configure Client Parameters
@@ -173,7 +180,10 @@ To generate traffic on the system, simply create the Job using **testClient.yaml
 
 ### Changing client properties (Producer)
 
-Change properties by modifying source code and rebuild Jar [producer source code](https://github.com/kjmadscience/voltdb-aggdemo)
+1. Change properties by modifying source code and rebuild Jar [producer source code](https://github.com/kjmadscience/voltdb-aggdemo)
+
+2. Change Jar in docker folder of this repo and create updated docker image.
+Change docker repo and tag as suitable for your environment. 
 
 
 
@@ -183,7 +193,7 @@ Change properties by modifying source code and rebuild Jar [producer source code
 Volt: Volt properties yaml 
 Redpanda: Redpanda properties yaml
 
-architecture image
+
 
 
 
