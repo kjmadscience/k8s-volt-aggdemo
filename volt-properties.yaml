@@ -1,33 +1,28 @@
 cluster:
   clusterSpec:
-#    nodeSelector:
-#      env: volt
     replicas: 3
     additionalStartArgs:
       - '--ignore=thp"'
-    image:
-      repository: "voltdb/voltdb-enterprise"
-      tag: "11.4.3"
-      pullPolicy: "Always"
     persistentVolume:
-      size: "100Gi"
+      size: "200Gi"
+      storageClassName: "csi-driver-lvm-linear-xfs"  
     deletePVC: 'true'
     resources:
       requests:
-        memory: "16Gi"
-        cpu: "8"
-      limits:
         memory: "32Gi"
-        cpu: "8"
+        cpu: "16"
+      limits:
+        memory: "64Gi"
+        cpu: "16"
   config:
     deployment:
       cluster:
         kfactor: 1
         sitesperhost: 8
       commandlog:
-        enabled: 'false'
+        enabled: 'true'
         synchronous: 'false'
-        logsize: 2048
+        logsize: 5120
       snapshot:
         enabled: 'false'
         frequency: '2h'
@@ -39,7 +34,7 @@ cluster:
           format: "csv"
           properties:
             topics: "incoming_cdrs"
-            procedure: "HandleMediationCDR" 
+            procedure: "HandleMediationCDR"
             brokers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
             max.poll.records: "1000"
             max.partition.fetch.bytes: "5000000"
@@ -47,7 +42,7 @@ cluster:
         configurations:
         - target: "unaggregated_cdrs"
           type: kafka
-          enabled: 'true'
+          enabled: 'false'
           properties:
             bootstrap.servers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
             topic.key: "unaggregated_cdrs.unaggregated_cdrs"
@@ -63,5 +58,3 @@ cluster:
           properties:
             bootstrap.servers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
             topic.key: "aggregated_cdrs.aggregated_cdrs"  
-  serviceSpec:
-    type: "NodePort"
