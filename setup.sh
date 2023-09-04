@@ -1,11 +1,11 @@
 #!/bin/sh
 #Variables
-CLUSTER_NAME="volt-lab"
-MACHINE_TYPE="c2-standard-16"
+CLUSTER_NAME="sd-lab"
+MACHINE_TYPE="c2d-standard-32"
 NUM_NODES="8"
-DISK_SIZE="150"
+DISK_SIZE="100"
 ZONE="us-central1-c"
-K8S_CLUSTER_VERSION="1.22.17-gke.4300"
+K8S_CLUSTER_VERSION="1.25.10-gke.2100"
 MONITORING_NS="monitoring"
 VOLT_NS="volt"
 CLIENT_NS="client"
@@ -14,20 +14,23 @@ DOCKER_ID=""
 DOCKER_API=""
 DOCKER_EMAIL=""
 VOLT_DEPLPOYMENTNAME="mydb"
-PROPERTY_FILE="myproperties.yaml"
+PROPERTY_FILE="volt-properties.yaml"
 LICENSE_FILE=""
-RP_PROPERTY="red.yaml"
+RP_PROPERTY="redpanda-properties.yaml"
 
 
 
 # Creating k8s cluster - GKE
 
 gcloud beta container clusters create $CLUSTER_NAME --zone $ZONE  \
- --machine-type $MACHINE_TYPE --image-type "COS_CONTAINERD" --disk-type "pd-ssd" \
- --disk-size $DISK_SIZE --num-nodes $NUM_NODES --cluster-version $K8S_CLUSTER_VERSION
+ --machine-type $MACHINE_TYPE --image-type "COS_CONTAINERD" --disk-type "pd-balanced" --local-nvme-ssd-block count=2 \
+ --disk-size $DISK_SIZE --num-nodes $NUM_NODES --cluster-version $K8S_CLUSTER_VERSION \
+ --labels=user=$DOCKER_ID
 
 
 # Creating namespaces
+
+kubectl create ns csi-drive
 
 kubectl create ns $VOLT_NS
 
@@ -37,8 +40,14 @@ kubectl create ns $REDPANDA_NS
 
 kubectl create ns $MONITORING_NS
 
-# For Redpanda prometheus, known limitation
 kubectl create ns rpmonitor
+
+# Storage class For NVMe disks in Pod
+
+helm install csi-driver-lvm metal-stack/csi-driver-lvm -n csi-drive
+
+kubectl create -f storageClass.yaml
+
 
 # Creating docker secret for volt enterprise image
 
@@ -48,7 +57,7 @@ kubectl create secret docker-registry dockerio-registry --docker-username=$DOCKE
 # Volt monitoring prometheus stack
 helm install monitoring-stack prometheus-community/kube-prometheus-stack --version=30.0.1 -f config.yaml -n $MONITORING_NS
 
-# Redpanda Monitoring prom
+# Redpanda Monitoring prometheus
 helm install prometheus prometheus-community/prometheus -n rpmonitor  -f rp-prometheus.yaml
 
 #installing Volt cluster
