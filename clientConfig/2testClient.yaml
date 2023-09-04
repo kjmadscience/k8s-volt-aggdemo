@@ -1,0 +1,33 @@
+apiVersion: batch/v1 
+kind: Job
+metadata:   
+  name: second-client 
+  labels:     
+    jobgroup: testclient 
+spec:   
+  template:     
+    metadata:       
+      name: kubejob       
+      labels:         
+        jobgroup: testclient    
+    spec:       
+      containers:       
+      - name: c         
+        image: jadejakajal13/volt-aggdemo:18
+        imagePullPolicy: Always
+        # MediationDataGenerator hostnames userCount tpMs durationSeconds missingRatio dupRatio lateRatio dateis1970Ratio offset userkafkaflag
+        # hostnames kafkaHostnames userCount tpMs durationSeconds missingRatio dupRatio lateRatio dateis1970Ratio offset userkafkaflag kafkaPort maxActiveSessions
+        args: ["java", "-jar", "-DKAFKA_PARTITONER_NAME=","volt-agg.jar","mydb-voltdb-cluster-client:21212" ,"redpanda-0.redpanda.redpanda.svc.cluster.local.,redpanda-1.redpanda.redpanda.svc.cluster.local.,redpanda-2.redpanda.redpanda.svc.cluster.local.", "5000000", "35", "1800", "100000", "100000", "100000", "100000","5000000","1","9093","10000"]       
+             # ,"1","9093","10000","mydb-voltdb-cluster-client.volt.svc.cluster.local.:21212"
+        resources:
+          limits:
+            memory: 28Gi
+            cpu: 6
+          requests:
+            memory: 28Gi
+            cpu: 6
+      restartPolicy: Never
+  backoffLimit: 0    
+
+
+
