@@ -47,7 +47,7 @@ kubectl create ns rpmonitor
 helm install csi-driver-lvm metal-stack/csi-driver-lvm -n csi-drive
 
 kubectl create -f storageClass.yaml
-	
+
 
 # Creating docker secret for volt enterprise image
 
@@ -65,16 +65,12 @@ helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb  --version=2.0.2 --wait --value
  --set-file cluster.config.licenseXMLFile=$LICENSE_FILE --set metrics.enabled=true --set metrics.delta=true --namespace  $VOLT_NS
 
 #installing Redpanda cluster
-helm install redpanda redpanda/redpanda -n $REDPANDA_NS --values $RP_PROPERTY --version=2.3.14
-
-#installing Redpanda Console
-helm install rp-console redpanda-console/console --values console.yaml -n $REDPANDA_NS
+helm install redpanda redpanda/redpanda -n $REDPANDA_NS --values $RP_PROPERTY 
 
 sleep 120
 #Volt schema creation
-kubectl cp schema/voltdb-aggdemo-createDB.sql mydb-voltdb-cluster-0:/tmp/ -n $VOLT_NS
 
-kubectl cp schema/procs.jar mydb-voltdb-cluster-0:/tmp/ -n $VOLT_NS
+kubectl cp schema/voltdb-aggdemo.jar mydb-voltdb-cluster-0:/tmp/ -n $VOLT_NS
 
 kubectl exec -it mydb-voltdb-cluster-0 -n $VOLT_NS -- sqlcmd < schema/voltdb-aggdemo-createDB.sql
     
