@@ -15,8 +15,7 @@ spec:
       - name: c         
         image: jadejakajal13/volt-aggdemo:21  
         imagePullPolicy: Always
-        # MediationDataGenerator hostnames userCount tpMs durationSeconds missingRatio dupRatio lateRatio dateis1970Ratio offset userkafkaflag
-        # hostnames kafkaHostnames userCount tpMs durationSeconds missingRatio dupRatio lateRatio dateis1970Ratio offset userkafkaflag kafkaPort maxActiveSessions
+        # kafkaHostnames kafkaPort durationSeconds
         args: ["java", "-jar","volt-cons.jar","redpanda-0.redpanda.redpanda.svc.cluster.local.,redpanda-1.redpanda.redpanda.svc.cluster.local.,redpanda-2.redpanda.redpanda.svc.cluster.local.","9093","1920"]       
              # ,"1","9093","10000","mydb-voltdb-cluster-client.volt.svc.cluster.local.:21212"
         resources:
