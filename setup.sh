@@ -47,7 +47,7 @@ kubectl create ns rpmonitor
 helm install csi-driver-lvm metal-stack/csi-driver-lvm -n csi-drive
 
 kubectl create -f storageClass.yaml
-
+	
 
 # Creating docker secret for volt enterprise image
 
@@ -61,7 +61,7 @@ helm install monitoring-stack prometheus-community/kube-prometheus-stack --versi
 helm install prometheus prometheus-community/prometheus -n rpmonitor  -f rp-prometheus.yaml
 
 #installing Volt cluster
-helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb --wait --values $PROPERTY_FILE --version=1.8.3 \
+helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb  --version=2.0.2 --wait --values $PROPERTY_FILE\
  --set-file cluster.config.licenseXMLFile=$LICENSE_FILE --set metrics.enabled=true --set metrics.delta=true --namespace  $VOLT_NS
 
 #installing Redpanda cluster
