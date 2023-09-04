@@ -1,11 +1,27 @@
-resources:
-  cpu:
-    cores: 12
-  memory:
-    container:
-      min: 32Gi
-      max: 32Gi
+tls:
+  enabled: false
+monitoring:
+  enabled: true
 storage:
   persistentVolume:
-    enabled: true
-    size: 100Gi
+   enabled: true
+   size: 200Gi
+   storageClass: "csi-driver-lvm-linear-xfs"
+resources:
+  cpu:
+    cores: 18
+    overprovisioned: true
+  memory:
+    enable_memory_locking: false
+    container:
+      max: 60Gi
+
+
+
+
+#storage:
+#  persistentVolume:
+#    enabled: true
+#    size: 75Gi
+#
+#
