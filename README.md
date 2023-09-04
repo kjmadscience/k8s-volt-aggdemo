@@ -19,9 +19,6 @@ This setup is a kubernetes deployment of the following demo: [VoltDB-aggdemo](ht
 
 2. Access and license to Volt Active Data Helm Charts and enterprise docker images.
 
-### Architecture Diagram
-
-![Volt Redpanda Mediation Env Architecture Diagram](image/VoltRedPandaMediationDemo.jpeg)
 
 ### Setup Environment
 
@@ -58,9 +55,6 @@ Details about the variables are below,
 	- resources (CPU, RAM)
 	- Volumes
 
-4. For Redpanda console, verify properties in **console.yaml**
-    - Brokers FQDN service name
-    - Service type
 
 5. Add helm repos (one time step)
 
@@ -138,14 +132,10 @@ prometheus-server   ClusterIP   10.36.10.184   <none>        80/TCP
 > Below are the different observability mediums for the entire env
 
 - Volt VMC
-	- The type of service is configured in **myproperties.yaml**
-
-	- Access VMC by checking ExternalNodeIP:VoltHTTPservicePort
+	- Access VMC using port-forwarding 
 
 - Redpanda Console
-	- The type of service is configured in **console.yaml**
-
-	- Access Console by checking ExternalNodeIP and redpanda console service NodePort value
+	- Access Redpanda Console using port-forwarding
 
 - Grafana UI
 	- The type of service is configured in **config.yaml**
@@ -154,18 +144,21 @@ prometheus-server   ClusterIP   10.36.10.184   <none>        80/TCP
 10. Configure Client Parameters
 
 Full details about client configurations are [here](https://github.com/srmadscience/voltdb-aggdemo)
+Gradle build version of client source code is [here](https://github.com/kjmadscience/volt-SD-aggdemo)
 
 In the kubernetes environment we will pass the parameters in **testClient.yaml** 
 In the args section of container definition, as shown below
 
 ```
+# hostnames kafkaHostnames userCount tpMs durationSeconds missingRatio dupRatio lateRatio dateis1970Ratio offset userkafkaflag kafkaPort maxActiveSessions
 
-# hostnames, usercount, tpms, durationseconds, missing ratio,dup ratio, late ratio, dateis1970ratio, offset --> Legend for params
-	spec:       
+   spec:       
       containers:       
       - name: c         
-        image: jadejakajal13/volt-aggdemo:9
-        args: ["java", "-jar", "volt-agg.jar", "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093", "500000", "30", "900", "100000", "100000", "100000", "-1","0"] 
+        image: jadejakajal13/volt-aggdemo:18
+        imagePullPolicy: Always 
+        args: ["java", "-jar", "-DKAFKA_PARTITONER_NAME=","volt-agg.jar","mydb-voltdb-cluster-client:21212" ,"redpanda-0.redpanda.redpanda.svc.cluster.local.,redpanda-1.redpanda.redpanda.svc.cluster.local.,redpanda-2.redpanda.redpanda.svc.cluster.local.", "10000000", "35", "1920", "100000", "100000", "100000", "100000","10000000","1","9093","10000"]       
+             # ,"1","9093","10000","mydb-voltdb-cluster-client.volt.svc.cluster.local.:21212"
 
 ```
 
@@ -197,7 +190,9 @@ Redpanda: Redpanda properties yaml
 
 
 
+### Architecture Diagram
 
+![Volt Redpanda Mediation Env Architecture Diagram](image/VoltRedPandaMediationDemo.jpeg)
 
 
 
