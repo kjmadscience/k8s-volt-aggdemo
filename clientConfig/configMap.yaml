@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aggdemo-configmap
+data:
+  hostnames: "mydb-voltdb-cluster-client:21212"
+  kafkaHostnames: "redpanda-0.redpanda.redpanda.svc.cluster.local.,redpanda-1.redpanda.redpanda.svc.cluster.local.,redpanda-2.redpanda.redpanda.svc.cluster.local."
+  userCount: "500"
+  tpMs: "35"
+  durationSeconds: "300" 
+  missingRatio: "100"
+  dupRatio: "100"
+  lateRatio: "100"
+  dateis1970Ratio: "100" 
+  offset: "0"
+  userkafkaflag: "1" 
+  kafkaPort: "9093" 
+  maxActiveSessions: "200"

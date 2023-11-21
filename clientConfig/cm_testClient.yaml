@@ -1,0 +1,32 @@
+apiVersion: batch/v1 
+kind: Job
+metadata:   
+  name: client 
+  labels:     
+    jobgroup: testclient 
+spec:   
+  template:     
+    metadata:       
+      name: kubejob       
+      labels:         
+        jobgroup: testclient    
+    spec:       
+      containers:       
+      - name: c         
+        image: jadejakajal13/volt-aggdemo:18
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: aggdemo-configmap
+        args: ["java", "-jar", "-DKAFKA_PARTITONER_NAME=","volt-agg.jar","$(hostnames)" ,"$(kafkaHostnames)", "$(userCount)", "$(tpMs)", "$(durationSeconds)", "$(missingRatio)", "$(dupRatio)", "$(lateRatio)", "100000","0","1","9093","15000"]       
+        resources:
+          limits:
+            memory: 2Gi
+            cpu: 1
+          requests:
+            memory: 2Gi
+            cpu: 1
+      restartPolicy: Never
+  backoffLimit: 0 
+
+
