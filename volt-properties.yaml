@@ -10,10 +10,10 @@ cluster:
     resources:
       requests:
         memory: "32Gi"
-        cpu: "16"
+        cpu: "24"
       limits:
         memory: "64Gi"
-        cpu: "16"
+        cpu: "24"
   config:
     deployment:
       cluster:
@@ -36,7 +36,7 @@ cluster:
             topics: "incoming_cdrs"
             procedure: "HandleMediationCDR"
             brokers: "redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
-            max.poll.records: "1000"
+            max.poll.records: "10000"
             max.partition.fetch.bytes: "5000000"
       export:
         configurations:

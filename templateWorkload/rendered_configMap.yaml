@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  dateis1970Ratio: '100000'
+  dupRatio: '500000'
+  durationSeconds: '3600'
+  hostnames: custom-hostname
+  kafkaHostnames: kafka-host-1,kafka-host-2,kafka-host-3
+  kafkaPort: '9092'
+  lateRatio: '200000'
+  maxActiveSessions: '300'
+  missingRatio: '1000000'
+  offset: '300000'
+  tpMs: '100'
+  userCount: '5000000'
+  userkafkaflag: '0'
+kind: ConfigMap
+metadata:
+  name: aggdemo-configmap

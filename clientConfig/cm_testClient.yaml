@@ -18,14 +18,14 @@ spec:
         envFrom:
         - configMapRef:
             name: aggdemo-configmap
-        args: ["java", "-jar", "-DKAFKA_PARTITONER_NAME=","volt-agg.jar","$(hostnames)" ,"$(kafkaHostnames)", "$(userCount)", "$(tpMs)", "$(durationSeconds)", "$(missingRatio)", "$(dupRatio)", "$(lateRatio)", "100000","0","1","9093","15000"]       
+        args: ["java", "-jar", "-DKAFKA_PARTITONER_NAME=","volt-agg.jar","$(hostnames)" ,"$(kafkaHostnames)", "$(userCount)", "$(tpMs)", "$(durationSeconds)", "$(missingRatio)", "$(dupRatio)", "$(lateRatio)", "$(dateis1970Ratio)","$(offset)","$(userkafkaflag)","$(kafkaPort)","$(maxActiveSessions)"]       
         resources:
           limits:
-            memory: 2Gi
-            cpu: 1
+            memory: 28Gi
+            cpu: 6
           requests:
-            memory: 2Gi
-            cpu: 1
+            memory: 28Gi
+            cpu: 6
       restartPolicy: Never
   backoffLimit: 0 
 

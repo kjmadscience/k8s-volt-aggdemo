@@ -15,7 +15,10 @@ prometheus:
 
 grafana:
   service:
-    type: LoadBalancer
+    type: NodePort
+    port: 80
+    nodePort: 31313
   adminPassword: admin
   persistence:
     enabled: true
+

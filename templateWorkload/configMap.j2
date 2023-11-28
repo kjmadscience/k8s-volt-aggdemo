@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aggdemo-configmap
+data:
+  hostnames: "{{ hostnames | default('mydb-voltdb-cluster-client:21212') }}"
+  kafkaHostnames: "{{ kafkaHostnames | default('redpanda-0.redpanda.redpanda.svc.cluster.local.,redpanda-1.redpanda.redpanda.svc.cluster.local.,redpanda-2.redpanda.redpanda.svc.cluster.local.') }}"
+  userCount: "{{ userCount | default('20000000') }}"
+  tpMs: "{{ tpMs | default('50') }}"
+  durationSeconds: "{{ durationSeconds | default('1800') }}"
+  missingRatio: "{{ missingRatio | default('5000000') }}"
+  dupRatio: "{{ dupRatio | default('5000000') }}"
+  lateRatio: "{{ lateRatio | default('5000000') }}"
+  dateis1970Ratio: "{{ dateis1970Ratio | default('5000000') }}"
+  offset: "{{ offset | default('5000000') }}"
+  userkafkaflag: "{{ userkafkaflag | default('1') }}"
+  kafkaPort: "{{ kafkaPort | default('9093') }}"
+  maxActiveSessions: "{{ maxActiveSessions | default('200') }}"

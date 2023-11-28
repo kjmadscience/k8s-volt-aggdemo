@@ -3,19 +3,19 @@
 CLUSTER_NAME="sd-lab"
 MACHINE_TYPE="c2d-standard-32"
 NUM_NODES="8"
-DISK_SIZE="100"
+DISK_SIZE="300"
 ZONE="us-central1-c"
-K8S_CLUSTER_VERSION="1.25.10-gke.2100"
+K8S_CLUSTER_VERSION="1.25.15-gke.1115000"
 MONITORING_NS="monitoring"
 VOLT_NS="volt"
 CLIENT_NS="client"
 REDPANDA_NS="redpanda"
-DOCKER_ID=""
-DOCKER_API=""
-DOCKER_EMAIL=""
+DOCKER_ID="jadejakajal13"
+DOCKER_API="b461d1b4-82c4-499e-afc0-f17943a16411"
+DOCKER_EMAIL="jadejakajal13@gmail.com"
 VOLT_DEPLPOYMENTNAME="mydb"
 PROPERTY_FILE="volt-properties.yaml"
-LICENSE_FILE=""
+LICENSE_FILE="/Users/tesla/Documents/license.xml"
 RP_PROPERTY="redpanda-properties.yaml"
 
 
@@ -61,7 +61,7 @@ helm install monitoring-stack prometheus-community/kube-prometheus-stack --versi
 helm install prometheus prometheus-community/prometheus -n rpmonitor  -f rp-prometheus.yaml
 
 #installing Volt cluster
-helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb  --version=2.0.2 --wait --values $PROPERTY_FILE\
+helm install $VOLT_DEPLPOYMENTNAME voltdb/voltdb  --version=1.8.10 --wait --values $PROPERTY_FILE\
  --set-file cluster.config.licenseXMLFile=$LICENSE_FILE --set metrics.enabled=true --set metrics.delta=true --namespace  $VOLT_NS
 
 #installing Redpanda cluster
@@ -81,3 +81,4 @@ kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk topic create incoming
 kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk topic create aggregated_cdrs --partitions 12 --replicas 3 --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093
 
 kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk topic create bad_cdrs --partitions 12 --replicas 3 --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093
+
